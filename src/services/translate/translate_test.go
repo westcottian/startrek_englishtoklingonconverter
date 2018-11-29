@@ -1,27 +1,30 @@
+
 package translate
 
 import (
-    "testing"
-    "strings"
+	"testing"
+        "strings"
 )
 
-func TestSetpIqaD_pass(t * testing.T) {
-    SetpIqaD()
+func TestSetpIqaD_pass(t *testing.T) {
+	SetpIqaD()
 
-    if len(pIqaD) != 35 {
-        t.Errorf("Error setting pIqaD")
-    }
+        if len(pIqaD) != 35 {
+                t.Errorf("Error setting pIqaD")
+        }
 }
 
-func TestKlingon_pass(t * testing.T) {
-    ch: = make(chan bool, 1)
+func TestKlingon_pass(t *testing.T) {
+	var hex string
 
-        hex: = Klingon(ch, "Uhura")
+	ch  := make(chan bool, 1)
+        go Klingon(ch, "Uhura", &hex)
+	<- ch
+        close(ch)
 
-        < -ch
-    close(ch)
+	hex = strings.Trim(hex, " ")
 
-    if strings.Compare(hex, "0XF8E5 0XF8D6 0XF8E5 0XF8E1 0XF8D0") != 0 {
-        t.Errorf("Error transalting Uhura")
-    }
+        if strings.Compare(hex, "0XF8E5 0XF8D6 0XF8E5 0XF8E1 0XF8D0") != 0 {
+                t.Errorf("Error transalting Uhura")
+        }
 }

@@ -28,8 +28,8 @@ func main() {
     translate.SetpIqaD()
 
     ch := make(chan bool, 2)
-    go translate.Klingon(ch, word, & hex)
-    go character.GetSpecie(ch, word, & specie) 
+    go translate.Klingon(ch, word, &hex)
+    go character.GetSpecie(ch, word, &specie) 
 	<-ch
 	<-ch
     close(ch)

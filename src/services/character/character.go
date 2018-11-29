@@ -8,7 +8,7 @@ import (
     "common/urls"
 )
 
-func GetSpecie(ch chan bool, name string, specie * string) {
+func GetSpecie(ch chan bool, name string, specie* string) {
     var aux string
 
     data := `name=` + name
@@ -18,7 +18,8 @@ func GetSpecie(ch chan bool, name string, specie * string) {
     headers := make(map[string] string)
     headers["Content-Type"] = "application/x-www-form-urlencoded"
 
-    ret, err := urls.SendRequest("2", "POST", url, form, headers, defines.Timeout)
+	fmt.Println("Sending post call")
+    ret, err := urls.SendRequest("POST", url, form, headers, defines.Timeout)
     if err != nil {
         ch <-false
         return
@@ -51,8 +52,8 @@ func getFullCharacter(uid string) string {
     headers["Content-Type"] = "application/x-www-form-urlencoded"
     headers["Access-Control-Allow-Origin"] = "*"
 
-    ret,
-    err := urls.SendRequest("2", "GET", url, nil, nil, defines.Timeout)
+	fmt.Println("Sending get call")
+    ret,err := urls.SendRequest("GET", url, nil, nil, defines.Timeout)
     if err != nil {
         return ""
     }
