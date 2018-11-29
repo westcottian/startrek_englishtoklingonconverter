@@ -1,32 +1,38 @@
 package main
 
 import (
-	"os"
-	"strings"
+    "os"
+    "strings"
+    "fmt"
 
-	"services/translate"
+    "services/character"
+    "services/translate"
 )
 
 func main() {
-	var word string
+    var hex, specie, word string
 
-	argsCount := len(os.Args)-1
-	argsData  := os.Args[1:]
+    argsCount := len(os.Args) - 1
+    argsData := os.Args[1: ]
 
-	if argsCount < 1 {
-		return
-	}
+    if argsCount < 1 {
+        fmt.Println("Invalid: Nothing to transalate.")
+        return
+    }
 
-	ch := make(chan bool, 1)
-	translate.SetpIqaD(ch)
+    for _, v := range argsData {
+        word = word + " " + v
+    }
+    word = strings.Trim(word, " ")
 
-	for i, v := range argsData {
-		word = word + " " + v
-	}
-	word = strings.Trim(word, " ")
+    translate.SetpIqaD()
 
-	<- ch
+    ch := make(chan bool, 2)
+    go translate.Klingon(ch, word, & hex)
+    go character.GetSpecie(ch, word, & specie) 
+	<-ch
+	<-ch
     close(ch)
-
-	hex := translate.Klingon(word)
+    fmt.Println(hex)
+    fmt.Println(specie)
 }
