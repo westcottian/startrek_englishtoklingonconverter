@@ -18,7 +18,6 @@ func GetSpecie(ch chan bool, name string, specie* string) {
     headers := make(map[string] string)
     headers["Content-Type"] = "application/x-www-form-urlencoded"
 
-	fmt.Println("Sending post call")
     ret, err := urls.SendRequest("POST", url, form, headers, defines.Timeout)
     if err != nil {
         ch <-false
@@ -52,7 +51,6 @@ func getFullCharacter(uid string) string {
     headers["Content-Type"] = "application/x-www-form-urlencoded"
     headers["Access-Control-Allow-Origin"] = "*"
 
-	fmt.Println("Sending get call")
     ret,err := urls.SendRequest("GET", url, nil, nil, defines.Timeout)
     if err != nil {
         return ""
